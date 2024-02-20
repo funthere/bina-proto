@@ -1,0 +1,34 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "loan_account.proto";
+import "loan_transaction.proto";
+import "loan_product.proto";
+
+service LoanAccountService {
+    rpc LoanAccountDetail (LoanAccountDetailRequest) returns (LoanAccountResponse) {}
+    rpc LoanAccountCreate (LoadAccountCreateRequest) returns (LoanAccountResponse) {}
+    rpc LoanAccountChangeState (LoanChangeStateRequest) returns (LoanAccountResponse) {}
+    rpc LoanAccountPayOff (LoanAccountPayOffRequest) returns (LoanAccountPayOffResponse) {}
+    rpc LoanAccountPreviewSchedule (LoanAccountPreviewScheduleRequest) returns (LoanAccountPreviewScheduleResponse) {}
+    rpc LoanAccountPreviewPayOffAmounts (LoanAccountPreviewPayOffAmountRequest) returns (LoanAccountPreviewPayOffAmountResponse) {}
+    rpc GetPreviewScheduleForLoanAccount (LoanAccountDetailRequest) returns (LoanAccountPreviewScheduleResponse) {}
+}
+
+service LoanTransactionService {
+    rpc MakeDisbursement (MakeDisbursementRequest) returns (LoanTransactionResponse) {}
+    rpc ApplyFee (ApplyFeeLoanRequest) returns (LoanTransactionResponse) {}
+    rpc Detail (LoanTransactionDetailRequest) returns (LoanTransactionResponse) {}
+    rpc MakeRepayment (MakeRepaymentRequest) returns (LoanTransactionResponse) {}
+    rpc Adjustment (LoanTransactionAdjustRequest) returns (LoanTransactionResponse) {}
+    rpc List (LoanTransactionListRequest) returns (LoanTransactionListResponse) {}
+}
+
+service LoanProductService {
+    rpc LoanProductDetail (LoanProductDetailRequest) returns (LoanProductResponse) {}
+    rpc LoanProductUpdate (LoanProductRequest) returns (LoanProductResponse) {}
+    rpc LoanProductCreate (LoanProductRequest) returns (LoanProductResponse) {}
+}

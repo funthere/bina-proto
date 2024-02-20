@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package protobuf.los;
+
+option go_package = "./golang";
+
+import "token_request.proto";
+import "token_response.proto";
+
+
+service TokenService{
+    rpc GenerateToken(RequestToken)returns(ResponseToken) {}
+    rpc GenerateSignature(RequestSignature)returns(ResponseSignature) {}
+}

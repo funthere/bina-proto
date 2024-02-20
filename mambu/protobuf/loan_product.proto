@@ -1,0 +1,725 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "general.proto";
+
+message LoanProductResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	LoanProduct data = 3;
+	proto.Meta meta = 4;
+}
+
+message LoanProductDetailRequest {
+	string loanProductId = 1;
+	string detailsLevel = 2;
+}
+
+message LoanProduct {
+	message AccountLinkSettings {
+		bool enabled = 1;
+		string linkableDepositProductKey = 2;
+		repeated string linkedAccountOptions = 3;
+		string settlementMethod = 4;
+	}
+	AccountLinkSettings accountLinkSettings = 1;
+	message AccountingSettings {
+		string accountingMethod = 1;
+		message AccountingRules {
+			string encodedKey = 1;
+			string financialResource = 2;
+			string glAccountKey = 3;
+			string transactionChannelKey = 4;
+		}
+		repeated AccountingRules accountingRules = 2;
+		string interestAccrualCalculation = 3;
+		string interestAccruedAccountingMethod = 4;
+	}
+	AccountingSettings accountingSettings = 2;
+	bool adjustInterestForFirstInstallment = 3;
+	bool allowCustomRepaymentAllocation = 4;
+	message ArrearsSettings {
+		string dateCalculationMethod = 1;
+		string encodedKey = 2;
+		uint32 monthlyToleranceDay = 3;
+		string nonWorkingDaysMethod = 4;
+		string toleranceCalculationMethod = 5;
+		double toleranceFloorAmount = 6;
+		message TolerancePercentageOfOutstandingPrincipal {
+			double defaultValue = 1;
+			double maxValue = 2;
+			double minValue = 3;
+		}
+		TolerancePercentageOfOutstandingPrincipal tolerancePercentageOfOutstandingPrincipal = 7;
+		message TolerancePeriod {
+			uint32 defaultValue = 1;
+			string encodedKey = 2;
+			uint32 maxValue = 3;
+			uint32 minValue = 4;
+		}
+		TolerancePeriod tolerancePeriod = 8;
+	}
+	ArrearsSettings arrearsSettings = 5;
+	message AvailabilitySettings {
+		repeated string availableFor = 1;
+		message BranchSettings {
+			repeated string availableProductBranches = 1;
+			bool forAllBranches = 2;
+		}
+		BranchSettings branchSettings = 2;
+	}
+	AvailabilitySettings availabilitySettings = 6;
+	string category = 7;
+	string creationDate = 8;
+	message CreditArrangementSettings {
+		string creditArrangementRequirement = 1;
+	}
+	CreditArrangementSettings creditArrangementSettings = 9;
+	message Currency {
+		string code = 1;
+		string currencyCode = 2;
+	}
+	Currency currency = 10;
+	string encodedKey = 11;
+	message FeesSettings {
+		bool allowArbitraryFees = 1;
+		message Fees {
+			message AccountingRules {
+				string encodedKey = 1;
+				string financialResource = 2;
+				string glAccountKey = 3;
+				string transactionChannelKey = 4;
+			}
+			repeated AccountingRules accountingRules = 1;
+			message AmortizationSettings {
+				string amortizationProfile = 1;
+				string encodedKey = 2;
+				string feeAmortizationUponRescheduleRefinanceOption = 3;
+				string frequency = 4;
+				uint32 intervalCount = 5;
+				string intervalType = 6;
+				uint32 periodCount = 7;
+				string periodUnit = 8;
+			}
+			AmortizationSettings amortizationSettings = 2;
+			double amount = 3;
+			string amountCalculationFunctionName = 4;
+			string amountCalculationMethod = 5;
+			string applyDateMethod = 6;
+			string creationDate = 7;
+			string encodedKey = 8;
+			string feeApplication = 9;
+			string id = 10;
+			string lastModifiedDate = 11;
+			string name = 12;
+			double percentageAmount = 13;
+			string state = 14;
+			message TaxSettings {
+				string taxableCalculationMethod = 1;
+			}
+			TaxSettings taxSettings = 15;
+			string trigger = 16;
+		}
+		repeated Fees fees = 2;
+	}
+	FeesSettings feesSettings = 12;
+	message FundingSettings {
+		bool enabled = 1;
+		message FunderInterestCommission {
+			double defaultValue = 1;
+			string encodedKey = 2;
+			double maxValue = 3;
+			double minValue = 4;
+		}
+		FunderInterestCommission funderInterestCommission = 2;
+		string funderInterestCommissionAllocationType = 3;
+		bool lockFundsAtApproval = 4;
+		message OrganizationInterestCommission {
+			double defaultValue = 1;
+			string encodedKey = 2;
+			double maxValue = 3;
+			double minValue = 4;
+		}
+		OrganizationInterestCommission organizationInterestCommission = 5;
+		double requiredFunds = 6;
+	}
+	FundingSettings fundingSettings = 13;
+	message GracePeriodSettings {
+		message GracePeriod {
+			double defaultValue = 1;
+			string encodedKey = 2;
+			double maxValue = 3;
+			double minValue = 4;
+		}
+		GracePeriod gracePeriod = 1;
+		string gracePeriodType = 2;
+	}
+	GracePeriodSettings gracePeriodSettings = 14;
+	string id = 15;
+	message InterestSettings {
+		bool accrueLateInterest = 1;
+		string compoundingFrequency = 2;
+		string daysInYear = 3;
+		message IndexRateSettings {
+			bool accrueInterestAfterMaturity = 1;
+			bool allowNegativeInterestRate = 2;
+			string encodedKey = 3;
+			string indexSourceKey = 4;
+			string interestChargeFrequency = 5;
+			double interestChargeFrequencyCount = 6;
+			message InterestRate {
+				double defaultValue = 1;
+				double maxValue = 2;
+				double minValue = 3;
+			}
+			InterestRate interestRate = 7;
+			double interestRateCeilingValue = 8;
+			double interestRateFloorValue = 9;
+			double interestRateReviewCount = 10;
+			string interestRateReviewUnit = 11;
+			string interestRateSource = 12;
+			string interestRateTerms = 13;
+			message InterestRateTiers {
+				string encodedKey = 1;
+				double endingBalance = 2;
+				double interestRate = 3;
+			}
+			repeated InterestRateTiers interestRateTiers = 14;
+		}
+		IndexRateSettings indexRateSettings = 4;
+		string interestApplicationMethod = 5;
+		string interestBalanceCalculationMethod = 6;
+		string interestCalculationMethod = 7;
+		message InterestRateSettings {
+			string encodedKey = 1;
+			string indexSourceKey = 2;
+			message InterestRate {
+				double defaultValue = 1;
+				double maxValue = 2;
+				double minValue = 3;
+			}
+			InterestRate interestRate = 3;
+			double interestRateCeilingValue = 4;
+			double interestRateFloorValue = 5;
+			double interestRateReviewCount = 6;
+			string interestRateReviewUnit = 7;
+			string interestRateSource = 8;
+		}
+		repeated InterestRateSettings interestRateSettings = 8;
+		string interestType = 9;
+		string scheduleInterestDaysCountMethod = 10;
+	}
+	InterestSettings interestSettings = 16;
+	message InternalControls {
+		uint32 dormancyPeriodDays = 1;
+		message FourEyesPrinciple {
+			bool activeForLoanApproval = 1;
+		}
+		FourEyesPrinciple fourEyesPrinciple = 2;
+		message LockSettings {
+			string cappingConstraintType = 1;
+			string cappingMethod = 2;
+			double cappingPercentage = 3;
+			double lockPeriodDays = 4;
+		}
+		LockSettings lockSettings = 3;
+	}
+	InternalControls internalControls = 17;
+	string lastModifiedDate = 18;
+	message LoanAmountSettings {
+		message LoanAmount {
+			double defaultValue = 1;
+			string encodedKey = 2;
+			double maxValue = 3;
+			double minValue = 4;
+		}
+		LoanAmount loanAmount = 1;
+		message TrancheSettings {
+			double maxNumberOfTranches = 1;
+		}
+		TrancheSettings trancheSettings = 2;
+	}
+	LoanAmountSettings loanAmountSettings = 19;
+	string name = 20;
+	message NewAccountSettings {
+		string accountInitialState = 1;
+		string idGeneratorType = 2;
+		string idPattern = 3;
+	}
+	NewAccountSettings newAccountSettings = 21;
+	string notes = 22;
+	message OffsetSettings {
+		bool allowOffset = 1;
+	}
+	OffsetSettings offsetSettings = 23;
+	message PaymentSettings {
+		string amortizationMethod = 1;
+		string latePaymentsRecalculationMethod = 2;
+		string paymentMethod = 3;
+		message PrepaymentSettings {
+			string applyInterestOnPrepaymentMethod = 1;
+			string elementsRecalculationMethod = 2;
+			string futurePaymentsAcceptance = 3;
+			string prepaymentAcceptance = 4;
+			string prepaymentRecalculationMethod = 5;
+			string principalPaidInstallmentStatus = 6;
+		}
+		PrepaymentSettings prepaymentSettings = 4;
+		message PrincipalPaymentSettings {
+			message Amount {
+				double defaultValue = 1;
+				string encodedKey = 2;
+				double maxValue = 3;
+				double minValue = 4;
+			}
+			Amount amount = 1;
+			uint32 defaultPrincipalRepaymentInterval = 2;
+			string encodedKey = 3;
+			bool includeFeesInFloorAmount = 4;
+			bool includeInterestInFloorAmount = 5;
+			message Percentage {
+				double defaultValue = 1;
+				string encodedKey = 2;
+				double maxValue = 3;
+				double minValue = 4;
+			}
+			Percentage percentage = 6;
+			double principalCeilingValue = 7;
+			double principalFloorValue = 8;
+			string principalPaymentMethod = 9;
+			double totalDueAmountFloor = 10;
+			string totalDuePayment = 11;
+		}
+		PrincipalPaymentSettings principalPaymentSettings = 5;
+		repeated string repaymentAllocationOrder = 6;
+	}
+	PaymentSettings paymentSettings = 24;
+	message PenaltySettings {
+		string loanPenaltyCalculationMethod = 1;
+		double loanPenaltyGracePeriod = 2;
+		message PenaltyRate {
+			double defaultValue = 1;
+			string encodedKey = 2;
+			double maxValue = 3;
+			double minValue = 4;
+		}
+		PenaltyRate penaltyRate = 3;
+	}
+	PenaltySettings penaltySettings = 25;
+	message RedrawSettings {
+		bool allowRedraw = 1;
+	}
+	RedrawSettings redrawSettings = 26;
+	message ScheduleSettings {
+		message BillingCycles {
+			bool enabled = 1;
+			repeated int64 startDays = 2;
+		}
+		BillingCycles billingCycles = 1;
+		double defaultRepaymentPeriodCount = 2;
+		message FirstRepaymentDueDateOffset {
+			double defaultValue = 1;
+			string encodedKey = 2;
+			double maxValue = 3;
+			double minValue = 4;
+		}
+		FirstRepaymentDueDateOffset firstRepaymentDueDateOffset = 3;
+		repeated int64 fixedDaysOfMonth = 4;
+		string interestAccrualSince = 5;
+		message NumInstallments {
+			double defaultValue = 1;
+			string encodedKey = 2;
+			double maxValue = 3;
+			double minValue = 4;
+		}
+		NumInstallments numInstallments = 6;
+		message PreviewSchedule {
+			double numberOfPreviewedInstalments = 1;
+			bool previewScheduleEnabled = 2;
+		}
+		PreviewSchedule previewSchedule = 7;
+		string repaymentMethod = 8;
+		string repaymentPeriodUnit = 9;
+		string repaymentReschedulingMethod = 10;
+		repeated string repaymentScheduleEditOptions = 11;
+		string repaymentScheduleMethod = 12;
+		message RoundingSettings {
+			string repaymentCurrencyRounding = 1;
+			string repaymentElementsRoundingMethod = 2;
+			string roundingRepaymentScheduleMethod = 3;
+		}
+		RoundingSettings roundingSettings = 13;
+		string scheduleDueDatesMethod = 14;
+		string shortMonthHandlingMethod = 15;
+	}
+	ScheduleSettings scheduleSettings = 27;
+	message SecuritySettings {
+		bool isCollateralEnabled = 1;
+		bool isGuarantorsEnabled = 2;
+		uint32 requiredGuaranties = 3;
+	}
+	SecuritySettings securitySettings = 28;
+	string state = 29;
+	message TaxSettings {
+		string taxCalculationMethod = 1;
+		string taxSourceKey = 2;
+		bool taxesOnFeesEnabled = 3;
+		bool taxesOnInterestEnabled = 4;
+		bool taxesOnPenaltyEnabled = 5;
+	}
+	TaxSettings taxSettings = 30;
+	message Templates {
+		string creationDate = 1;
+		string encodedKey = 2;
+		string lastModifiedDate = 3;
+		string name = 4;
+		string type = 5;
+	}
+	repeated Templates templates = 31;
+	string type = 32;
+}
+
+message LoanProductRequest {
+	message AccountLinkSettings {
+		bool enabled = 1;
+		string linkableDepositProductKey = 2;
+		repeated string linkedAccountOptions = 3;
+		string settlementMethod = 4;
+	}
+	AccountLinkSettings accountLinkSettings = 1;
+	message AccountingSettings {
+		string accountingMethod = 1;
+		message AccountingRules {
+			string financialResource = 1;
+			string glAccountKey = 2;
+			string transactionChannelKey = 3;
+		}
+		repeated AccountingRules accountingRules = 2;
+		string interestAccrualCalculation = 3;
+		string interestAccruedAccountingMethod = 4;
+	}
+	AccountingSettings accountingSettings = 2;
+	bool adjustInterestForFirstInstallment = 3;
+	bool allowCustomRepaymentAllocation = 4;
+	message ArrearsSettings {
+		string dateCalculationMethod = 1;
+		uint32 monthlyToleranceDay = 2;
+		string nonWorkingDaysMethod = 3;
+		string toleranceCalculationMethod = 4;
+		double toleranceFloorAmount = 5;
+		message TolerancePercentageOfOutstandingPrincipal {
+			double defaultValue = 1;
+			double maxValue = 2;
+			double minValue = 3;
+		}
+		TolerancePercentageOfOutstandingPrincipal tolerancePercentageOfOutstandingPrincipal = 6;
+		message TolerancePeriod {
+			double defaultValue = 1;
+			double maxValue = 2;
+			double minValue = 3;
+		}
+		TolerancePeriod tolerancePeriod = 7;
+	}
+	ArrearsSettings arrearsSettings = 5;
+	message AvailabilitySettings {
+		repeated string availableFor = 1;
+		message BranchSettings {
+			repeated string availableProductBranches = 1;
+			bool forAllBranches = 2;
+		}
+		BranchSettings branchSettings = 2;
+	}
+	AvailabilitySettings availabilitySettings = 6;
+	string category = 7;
+	string creationDate = 8;
+	message CreditArrangementSettings {
+		string creditArrangementRequirement = 1;
+	}
+	CreditArrangementSettings creditArrangementSettings = 9;
+	message Currency {
+		string code = 1;
+		string currencyCode = 2;
+	}
+	Currency currency = 10;
+	message FeesSettings {
+		bool allowArbitraryFees = 1;
+		message Fees {
+			message AccountingRules {
+				string financialResource = 1;
+				string glAccountKey = 2;
+				string transactionChannelKey = 3;
+			}
+			repeated AccountingRules accountingRules = 1;
+			message AmortizationSettings {
+				string amortizationProfile = 1;
+				string feeAmortizationUponRescheduleRefinanceOption = 2;
+				string frequency = 3;
+				uint32 intervalCount = 4;
+				string intervalType = 5;
+				uint32 periodCount = 6;
+				string periodUnit = 7;
+			}
+			AmortizationSettings amortizationSettings = 2;
+			double amount = 3;
+			string amountCalculationFunctionName = 4;
+			string amountCalculationMethod = 5;
+			string applyDateMethod = 6;
+			string creationDate = 7;
+			string feeApplication = 8;
+			string id = 9;
+			string lastModifiedDate = 10;
+			string name = 11;
+			double percentageAmount = 12;
+			string state = 13;
+			message TaxSettings {
+				string taxableCalculationMethod = 1;
+			}
+			TaxSettings taxSettings = 14;
+			string trigger = 15;
+		}
+		repeated Fees fees = 2;
+	}
+	FeesSettings feesSettings = 11;
+	message FundingSettings {
+		bool enabled = 1;
+		message FunderInterestCommission {
+			double defaultValue = 1;
+			double maxValue = 2;
+			double minValue = 3;
+		}
+		FunderInterestCommission funderInterestCommission = 2;
+		string funderInterestCommissionAllocationType = 3;
+		bool lockFundsAtApproval = 4;
+		message OrganizationInterestCommission {
+			double defaultValue = 1;
+			double maxValue = 2;
+			double minValue = 3;
+		}
+		OrganizationInterestCommission organizationInterestCommission = 5;
+		double requiredFunds = 6;
+	}
+	FundingSettings fundingSettings = 12;
+	message GracePeriodSettings {
+		message GracePeriod {
+			double defaultValue = 1;
+			double maxValue = 2;
+			double minValue = 3;
+		}
+		GracePeriod gracePeriod = 1;
+		string gracePeriodType = 2;
+	}
+	GracePeriodSettings gracePeriodSettings = 13;
+	string id = 14;
+	message InterestSettings {
+		bool accrueLateInterest = 1;
+		string compoundingFrequency = 2;
+		string daysInYear = 3;
+		message IndexRateSettings {
+			bool accrueInterestAfterMaturity = 1;
+			bool allowNegativeInterestRate = 2;
+			string indexSourceKey = 3;
+			string interestChargeFrequency = 4;
+			double interestChargeFrequencyCount = 5;
+			message InterestRate {
+				double defaultValue = 1;
+				double maxValue = 2;
+				double minValue = 3;
+			}
+			InterestRate interestRate = 6;
+			double interestRateCeilingValue = 7;
+			double interestRateFloorValue = 8;
+			double interestRateReviewCount = 9;
+			string interestRateReviewUnit = 10;
+			string interestRateSource = 11;
+			string interestRateTerms = 12;
+			message InterestRateTiers {
+				double endingBalance = 1;
+				double interestRate = 2;
+			}
+			repeated InterestRateTiers interestRateTiers = 13;
+		}
+		IndexRateSettings indexRateSettings = 4;
+		string interestApplicationMethod = 5;
+		string interestBalanceCalculationMethod = 6;
+		string interestCalculationMethod = 7;
+		message InterestRateSettings {
+			string indexSourceKey = 1;
+			message InterestRate {
+				double defaultValue = 1;
+				double maxValue = 2;
+				double minValue = 3;
+			}
+			InterestRate interestRate = 2;
+			double interestRateCeilingValue = 3;
+			double interestRateFloorValue = 4;
+			double interestRateReviewCount = 5;
+			string interestRateReviewUnit = 6;
+			string interestRateSource = 7;
+		}
+		repeated InterestRateSettings interestRateSettings = 8;
+		string interestType = 9;
+		string scheduleInterestDaysCountMethod = 10;
+	}
+	InterestSettings interestSettings = 15;
+	message InternalControls {
+		double dormancyPeriodDays = 1;
+		message FourEyesPrinciple {
+			bool activeForLoanApproval = 1;
+		}
+		FourEyesPrinciple fourEyesPrinciple = 2;
+		message LockSettings {
+			string cappingConstraintType = 1;
+			string cappingMethod = 2;
+			double cappingPercentage = 3;
+			double lockPeriodDays = 4;
+		}
+		LockSettings lockSettings = 3;
+	}
+	InternalControls internalControls = 16;
+	string lastModifiedDate = 17;
+	message LoanAmountSettings {
+		message LoanAmount {
+			double defaultValue = 1;
+			double maxValue = 2;
+			double minValue = 3;
+		}
+		LoanAmount loanAmount = 1;
+		message TrancheSettings {
+			double maxNumberOfTranches = 1;
+		}
+		TrancheSettings trancheSettings = 2;
+	}
+	LoanAmountSettings loanAmountSettings = 18;
+	string name = 19;
+	message NewAccountSettings {
+		string accountInitialState = 1;
+		string idGeneratorType = 2;
+		string idPattern = 3;
+	}
+	NewAccountSettings newAccountSettings = 20;
+	string notes = 21;
+	message OffsetSettings {
+		bool allowOffset = 1;
+	}
+	OffsetSettings offsetSettings = 22;
+	message PaymentSettings {
+		string amortizationMethod = 1;
+		string latePaymentsRecalculationMethod = 2;
+		string paymentMethod = 3;
+		message PrepaymentSettings {
+			string applyInterestOnPrepaymentMethod = 1;
+			string elementsRecalculationMethod = 2;
+			string futurePaymentsAcceptance = 3;
+			string prepaymentAcceptance = 4;
+			string prepaymentRecalculationMethod = 5;
+			string principalPaidInstallmentStatus = 6;
+		}
+		PrepaymentSettings prepaymentSettings = 4;
+		message PrincipalPaymentSettings {
+			message Amount {
+				double defaultValue = 1;
+				double maxValue = 2;
+				double minValue = 3;
+			}
+			Amount amount = 1;
+			double defaultPrincipalRepaymentInterval = 2;
+			bool includeFeesInFloorAmount = 3;
+			bool includeInterestInFloorAmount = 4;
+			message Percentage {
+				double defaultValue = 1;
+				double maxValue = 2;
+				double minValue = 3;
+			}
+			Percentage percentage = 5;
+			double principalCeilingValue = 6;
+			double principalFloorValue = 7;
+			string principalPaymentMethod = 8;
+			double totalDueAmountFloor = 9;
+			string totalDuePayment = 10;
+		}
+		PrincipalPaymentSettings principalPaymentSettings = 5;
+		repeated string repaymentAllocationOrder = 6;
+	}
+	PaymentSettings paymentSettings = 23;
+	message PenaltySettings {
+		string loanPenaltyCalculationMethod = 1;
+		double loanPenaltyGracePeriod = 2;
+		message PenaltyRate {
+			double defaultValue = 1;
+			double maxValue = 2;
+			double minValue = 3;
+		}
+		PenaltyRate penaltyRate = 3;
+	}
+	PenaltySettings penaltySettings = 24;
+	message RedrawSettings {
+		bool allowRedraw = 1;
+	}
+	RedrawSettings redrawSettings = 25;
+	message ScheduleSettings {
+		message BillingCycles {
+			bool enabled = 1;
+			repeated int64 startDays = 2;
+		}
+		BillingCycles billingCycles = 1;
+		uint32 defaultRepaymentPeriodCount = 2;
+		message FirstRepaymentDueDateOffset {
+			double defaultValue = 1;
+			double maxValue = 2;
+			double minValue = 3;
+		}
+		FirstRepaymentDueDateOffset firstRepaymentDueDateOffset = 3;
+		repeated int64 fixedDaysOfMonth = 4;
+		string interestAccrualSince = 5;
+		message NumInstallments {
+			double defaultValue = 1;
+			double maxValue = 2;
+			double minValue = 3;
+		}
+		NumInstallments numInstallments = 6;
+		message PreviewSchedule {
+			uint32 numberOfPreviewedInstalments = 1;
+			bool previewScheduleEnabled = 2;
+		}
+		PreviewSchedule previewSchedule = 7;
+		string repaymentMethod = 8;
+		string repaymentPeriodUnit = 9;
+		string repaymentReschedulingMethod = 10;
+		repeated string repaymentScheduleEditOptions = 11;
+		string repaymentScheduleMethod = 12;
+		message RoundingSettings {
+			string repaymentCurrencyRounding = 1;
+			string repaymentElementsRoundingMethod = 2;
+			string roundingRepaymentScheduleMethod = 3;
+		}
+		RoundingSettings roundingSettings = 13;
+		string scheduleDueDatesMethod = 14;
+		string shortMonthHandlingMethod = 15;
+	}
+	ScheduleSettings scheduleSettings = 26;
+	message SecuritySettings {
+		bool isCollateralEnabled = 1;
+		bool isGuarantorsEnabled = 2;
+		uint32 requiredGuaranties = 3;
+	}
+	SecuritySettings securitySettings = 27;
+	string state = 28;
+	message TaxSettings {
+		string taxCalculationMethod = 1;
+		string taxSourceKey = 2;
+		bool taxesOnFeesEnabled = 3;
+		bool taxesOnInterestEnabled = 4;
+		bool taxesOnPenaltyEnabled = 5;
+	}
+	TaxSettings taxSettings = 29;
+	message Templates {
+		string name = 1;
+		string type = 2;
+	}
+	repeated Templates templates = 30;
+	string type = 31;
+	string encodedKey = 32;
+}

@@ -1,0 +1,112 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "general.proto";
+import "deposit_account.proto";
+import "loan_account.proto";
+
+message CreditArrangementCreateRequest {
+	double amount = 1;
+	string expireDate = 2;
+	string exposureLimitType = 3;
+	string holderKey = 4;
+	string holderType = 5;
+	string lastModifiedDate = 6;
+	string notes = 7;
+	string startDate = 8;
+    message Currency {
+        string code = 1;
+        string currencyCode = 2;
+    }
+	Currency currency = 9;
+	_cfsAccount _cfsAccount = 10;
+}
+
+message _cfsAccount {
+    string cfsClientId = 1;
+}
+
+
+message CreditArrangementResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	CreditArrangement data = 3;
+    proto.Meta meta = 4;
+}
+
+message CreditArrangement {
+	double amount = 1;
+	string approvedDate = 2;
+	double availableCreditAmount = 3;
+	string closedDate = 4;
+	double consumedCreditAmount = 5;
+	string creationDate = 6;
+	message Currency {
+		string code = 1;
+		string currencyCode = 2;
+	}
+	Currency currency = 7;
+	string encodedKey = 8;
+	string expireDate = 9;
+	string exposureLimitType = 10;
+	string holderKey = 11;
+	string holderType = 12;
+	string id = 13;
+	string lastModifiedDate = 14;
+	string notes = 15;
+	string startDate = 16;
+	string state = 17;
+	string subState = 18;
+}
+
+message CreditArrangementAccountRequest {
+	string creditArrangementId = 1;
+	string accountId = 2;
+	string accountType = 3;
+}
+
+message CreditArrangementAccountResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	CreditArrangementAccount data = 3;
+	proto.Meta meta = 4;
+}
+
+message CreditArrangementAccount {
+	repeated proto.LoanAccount loanAccounts = 1;
+	repeated proto.DepositAccount depositAccounts = 2;
+}
+
+message CreditArrangementUpdateRequest {
+	string creditArrangementId = 1;
+	double amount = 2;
+	string expireDate = 3;
+	string exposureLimitType = 4;
+	string notes = 5;
+	string startDate = 6;
+	message Currency {
+		string currencyCode = 1;
+		string code = 2;
+	}
+	Currency currency = 7;
+}
+
+message CreditArrangementDetailRequest {
+	string creditArrangementId = 1;
+	string detailsLevel = 2;
+}
+
+message CreditArrangementSearchRequest {
+	repeated proto.FilterCriteria filterCriteria = 1;
+	proto.SortingCriteria sortingCriteria = 2;
+}
+
+message CreditArrangementListResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	repeated CreditArrangement data = 3;
+    proto.Meta meta = 4;
+}

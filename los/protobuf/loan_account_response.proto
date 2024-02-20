@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package protobuf.los;
+import "google/protobuf/timestamp.proto";
+import "los_general.proto";
+
+option go_package = "./golang";
+
+message ResCreateLoanAccount {
+    string response_code = 1;
+    string response_message = 2;
+    Meta meta = 3;
+    DataLoanAccount data = 4;
+}
+
+message ResGetLoanAccount {
+    string response_code = 1;
+    string response_message = 2;
+    Meta meta = 3;
+    DataLoanAccount data = 4;
+}
+
+message DataLoanAccount {
+    string id = 1;
+    double amount = 2;
+    double disbursementAmount = 3;
+    double payoffAmount = 4;
+    double adminFee = 5;
+    double fee = 6;
+    string creditArrangementId = 7;
+    string customerId = 8;
+    string holderKey = 9;
+    string holderType = 10;
+    double interestRate = 11;
+    string disbursementTransactionId = 12;
+    string disburseCoreReference = 13;
+    string payoffCoreReference = 14;
+    string status = 15;
+    string statusDescription = 16;
+    google.protobuf.Timestamp originalLoanDate = 17;
+    google.protobuf.Timestamp maturityDate = 18;
+    google.protobuf.Timestamp LoanDisbursementDate = 19;
+    google.protobuf.Timestamp LoanPayoffDate = 20;
+    google.protobuf.Timestamp CreatedAt = 21;
+}
+
+message ResLoanPreview {
+    string response_code = 1;
+    string response_message = 2;
+    Meta meta = 3;
+    DataLoanAccountPreview data = 4;
+}
+
+message DataLoanAccountPreview {
+    repeated Installments installments = 1;
+    Currency currency = 2;
+}
+
+message Amount {
+	double expected = 1;
+	double paid = 2;
+	double due = 3;
+}
+
+message Principal {
+	Amount amount = 1;
+}
+
+message Tax {
+	double expected = 1;
+	double paid = 2;
+	double due = 3;
+}
+
+message Interest {
+	Amount amount = 1;
+	Tax tax = 2;
+}
+
+message Fee {
+	Amount amount = 1;
+	Tax tax = 2;
+}
+
+message Penalty {
+	Amount amount = 1;
+	Tax tax = 2;
+}
+
+message Installments {
+	string number = 1;
+	google.protobuf.Timestamp dueDate = 2;
+	string state = 3;
+	bool isPaymentHoliday = 4;
+	Principal principal = 5;
+	Interest interest = 6;
+	Fee fee = 7;
+	Penalty penalty = 8;
+}
+
+message Currency {
+	string currencyCode = 1;
+	string code = 2;
+}

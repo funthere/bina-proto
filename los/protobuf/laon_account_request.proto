@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package protobuf.los;
+option go_package = "./golang";
+
+
+message ReqLoanAccount {
+    string receiptDate = 1;
+    string applicationNumber = 2;
+    string branch = 3;
+    string program = 4;
+    string productType = 5;
+    string originalLoanDate = 6;
+    string accountNumber = 7;
+    string customerIdentityNumber = 8;
+    double loanAmount = 9;
+    uint32 loanTenure = 10;
+    double downPayment = 11;
+    repeated InterestSetting interestSettings = 12;
+    string housingName = 13;
+    string developerName = 14;
+    string developerGroupName = 15;
+    string collateralType = 16;
+    string collateralStatus = 17;
+    string collateralAddress = 18;
+    string collateralRt = 19;
+    string collateralRw = 20;
+    string collateralSubdistrict = 21;
+    string collateralDistrict = 22;
+    string collateralCity = 23;
+    string collateralProvince = 24;
+    string collateralZipCode = 25;
+    string collateralCertificateExpiryDate = 26;
+    uint32 collateralGroundArea = 27;
+    uint32 collateralBuildingArea = 28;
+    double collateralValue = 29;
+    string buyingPurpose = 30;
+    double buyingPrice = 31;
+    string insuranceLifeCompany = 32;
+    string insuranceLifePolicyNumber = 33;
+    string insuranceLifePolicyStartDate = 34;
+    string insuranceLifePolicyEndDate = 35;
+    double insuranceLifePolicyAmount = 36;
+    string insuranceFireCompany = 37;
+    string insuranceFirePolicyNumber = 38;
+    string insuranceFirePolicyStartDate = 39;
+    string insuranceFirePolicyEndDate = 40;
+    double insuranceFirePolicyAmount = 41;
+    string name = 42;
+    string ktp = 43;
+    string birthPlace = 44;
+    string birthDate = 45;
+    string npwp = 46;
+    string nationality = 47;
+    string maritalStatus = 48;
+    string gender = 49;
+    string incomeSource = 50;
+    bool separateAssets = 51;
+    string ktpAddress = 52;
+    string homeAddress = 53;
+    string rt = 54;
+    string rw = 55;
+    string subdistrict = 56;
+    string district = 57;
+    string city = 58;
+    string province = 59;
+    string zipCode = 60;
+    string houseStatus = 61;
+    string homePhone = 62;
+    string mobilePhone_1 = 63;
+    string mobilePhone_2 = 64;
+    string email = 65;
+    bool havingAGuarantor = 66;
+    string religion = 67;
+    string motherName = 68;
+    string education = 69;
+    string job = 70;
+    string jobPosition = 71;
+    string jobStatus = 72;
+    uint32 yearsOfService = 73;
+    string positionCategory = 74;
+    string companyName = 75;
+    string companyAddress = 76;
+    string companyRt = 77;
+    string companyRw = 78;
+    string companySubdistrict = 79;
+    string companyDistrict = 80;
+    string companyCity = 81;
+    string companyProvince = 82;
+    string companyZipCode = 83;
+    string companyPhone = 84;
+    string spouseName = 85;
+    string spouseKtp = 86;
+    string spouseBirthPlace = 87;
+    string spouseBirthDate = 88;
+    string spouseNpwp = 89;
+    string spouseGender = 90;
+    string spouseNationality = 91;
+    string spouseEducation = 92;
+    string spouseMaritalStatus = 93;
+    string relationship = 94;
+    string spouseAddress = 95;
+    string spouseRt = 96;
+    string spouseRw = 97;
+    string spouseSubdistrict = 98;
+    string spouseDistrict = 99;
+    string spouseCity = 100;
+    string spouseProvince = 101;
+    string spouseZipCode = 102;
+    string spouseHomeStatus = 103;
+    string spouseHomePhone = 104;
+    string spouseMobilePhone_1 = 105;
+    string spouseMobilePhone_2 = 106;
+    string spouseEmail = 107;
+}
+
+message ReqGetLoanAccount {
+    string loanId = 1;
+}
+
+message ReqLoanPreview {
+    double interestRate = 1;
+    double loanAmount = 2;
+    double adminFee = 3;
+    string originalLoanDate = 4;
+    string maturityDate = 5;
+}
+
+message InterestSetting {
+    double interestRate = 1;
+    string validFrom = 2;
+}

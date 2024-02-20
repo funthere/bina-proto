@@ -1,0 +1,287 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "general.proto";
+
+message DepositTransactionResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	DepositTransaction data = 3;
+    proto.Meta meta = 4;
+}
+
+message DepositTransaction {
+	string encodedKey = 1;
+	string id = 2;
+	string externalId = 3;
+	string paymentOrderId = 4;
+	string creationDate = 5;
+	string valueDate = 6;
+	string bookingDate = 7;
+	string notes = 8;
+	string parentAccountKey = 9;
+	string type = 10;
+	double amount = 11;
+	string currencyCode = 12;
+	AffectedAmounts affectedAmounts = 13;
+	Taxes taxes = 14;
+	AccountBalances accountBalances = 15;
+	string userKey = 16;
+	Terms terms = 17;
+	TransactionDetails transactionDetails = 18;
+	TransferDetails transferDetails = 19;
+	repeated Fees fees = 20;
+	string branchKey = 21;
+}
+
+message DepositTransactionRequest {
+    double amount = 1;
+	string bookingDate = 2;
+	string externalId = 3;
+	string holdExternalReferenceId = 4;
+	string notes = 5;
+	string paymentOrderId = 6;
+	TransactionDetails transactionDetails = 7;
+	string valueDate = 8;
+	string depositAccountId = 9;
+}
+
+
+message TransactionDetails {
+    string transactionChannelId = 1;
+    string transactionChannelKey = 2;
+}
+
+message TransferDetails {
+    string linkedDepositTransactionKey = 1;
+    string linkedLoanTransactionKey = 2;
+}
+
+message Taxes {
+    double taxRate = 1;
+}
+
+message AccountBalances {
+    double totalBalance = 1;
+}
+
+message AffectedAmounts {
+    double feesAmount = 1;
+    double fractionAmount = 2;
+    double fundsAmount = 3;
+    double interestAmount = 4;
+    double overdraftAmount = 5;
+    double overdraftFeesAmount = 6;
+    double overdraftInterestAmount = 7;
+    double technicalOverdraftAmount = 8;
+    double technicalOverdraftInterestAmount = 9;
+}
+
+message Fees {
+    double amount = 1;
+    string name = 2;
+    string predefinedFeeKey = 3;
+    double taxAmount = 4;
+    string trigger = 5;
+}
+
+message InterestAccruedAmounts {
+    double interestAccrued = 1;
+    double negativeInterestAccrued = 2;
+    double overdraftInterestAccrued = 3;
+    double technicalOverdraftInterestAccrued = 4;
+}
+
+message Terms {
+    message InterestSettings {
+        double indexInterestRate = 1;
+        double interestRate = 2;
+    }
+    InterestSettings interestSettings = 1;
+    message OverdraftInterestSettings {
+        double indexInterestRate = 1;
+        double interestRate = 2;
+    }
+    OverdraftInterestSettings overdraftInterestSettings = 2;
+    message OverdraftSettings {
+        uint32 overdraftLimit = 1;
+    }
+    OverdraftSettings overdraftSettings = 3;
+}
+
+message TransferTransactionRequest {
+	double amount = 1;
+	string externalId = 2;
+	string notes = 3;
+	string paymentOrderId = 4;
+	TransferDetail transferDetails = 5;
+	string valueDate = 6;
+    string depositAccountId = 7;
+}
+
+message TransferDetail {
+    string linkedAccountId = 1;
+    string linkedAccountKey = 2;
+    string linkedAccountType = 3;
+}
+
+message AdjustTransactionRequest {
+	string notes = 1;
+    string depositTransactionId = 2;
+}
+
+message TransactionDepositRequest {
+	string depositAccountId = 1;
+	double amount = 2;
+	string valueDate = 3;
+	string notes = 4;
+	string transactionChannelId = 5;
+	FeeRequest fee = 6;
+	string externalId = 7;
+}
+
+message FeeRequest {
+    double feeAmount = 1;
+    string feeId = 2;
+}
+
+message TransactionDepositResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	ResultDepositTransaction data = 3;
+	proto.Meta meta = 4;
+}
+
+message ResultDepositTransaction {
+    string transactionID = 1;
+    double balance = 2;
+    string reversalID = 3;
+    string creationDate = 4;
+	DataFee fee = 5;
+}
+
+message DataFee {
+	double feeAmount = 1;
+	string feeId = 2;
+}
+
+message FeeTransactionRequest {
+	string depositAccountId = 1;
+	string externalId = 2;
+	string notes = 3;
+	string predefinedFeeKey = 4;
+}
+
+message FeeTransactionResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	FeeTransaction data = 3;
+    proto.Meta meta = 4;
+}
+
+message FeeTransaction {
+	string encodedKey = 1;
+	string id = 2;
+	string externalId = 3;
+	string creationDate = 4;
+	string valueDate = 5;
+	string bookingDate = 6;
+	string notes = 7;
+	string parentAccountKey = 8;
+	string type = 9;
+	double amount = 10;
+	string currencyCode = 11;
+	AffectedAmounts affectedAmounts = 12;
+	AccountBalances accountBalances = 13;
+	string userKey = 14;
+	string branchKey = 15;
+	Terms terms = 16;
+	TransactionDetails transactionDetails = 17;
+	TransferDetails transferDetails = 18;
+	message Fees {
+		string predefinedFeeKey = 1;
+		string name = 2;
+		double amount = 3;
+		double taxAmount = 4;
+		string trigger = 5;
+	}
+	repeated Fees fees = 19;
+}
+
+message TransationDepositResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	TransationDeposit data = 3;
+    proto.Meta meta = 4;
+}
+
+message TransationDeposit {
+	string transactionID = 1;
+	double balance = 2;
+	string reversalID = 3;
+	string creationDate = 4;
+}
+
+message TransactionTransferRequest {
+	string senderAccountId = 1;
+	double amount = 2;
+	string receiverAccountId = 3;
+	string valueDate = 4;
+	string notes = 5;
+	string currencyCode = 6;
+	string externalId = 7;
+}
+
+message DepositTransactionListRequest {
+	string depositAccountId = 1;
+	uint32 page = 2;
+	uint32 limit = 3;
+	string paginationDetails = 4;
+	string detailsLevel = 5;
+}
+
+message DepositTransactionListResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	repeated DepositTransactionList data = 3;
+    proto.Meta meta = 4;
+}
+
+message DepositTransactionList {
+	string encodedKey = 1;
+	string id = 2;
+	string externalId = 3;
+	string paymentOrderId = 4;
+	string creationDate = 5;
+	string valueDate = 6;
+	string bookingDate = 7;
+	string notes = 8;
+	string parentAccountKey = 9;
+	string type = 10;
+	double amount = 11;
+	string currencyCode = 12;
+	AffectedAmounts affectedAmounts = 13;
+	Taxes taxes = 14;
+	AccountBalances accountBalances = 15;
+	string userKey = 16;
+	Terms terms = 17;
+	TransactionDetails transactionDetails = 18;
+	TransferDetails transferDetails = 19;
+	repeated Fees fees = 20;
+	string branchKey = 21;
+}
+
+message ReverseDepositTransactionRequest {
+	string reversalId = 1;
+	string notes = 2;
+}
+
+message DepositTransactionSearchRequest {
+	proto.Parameter parameter = 1;
+	repeated proto.FilterCriteria filterCriteria = 2;
+	proto.SortingCriteria sortingCriteria = 3;
+}
+

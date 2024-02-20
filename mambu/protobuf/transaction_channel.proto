@@ -1,0 +1,56 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "general.proto";
+
+message TransactionChannelResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	TransactionChannel data = 3;
+    proto.Meta meta = 4;
+}
+
+message TransactionChannel {
+	string encodedKey = 1;
+	string id = 2;
+	string name = 3;
+	string glAccount = 4;
+	bool availableForAll = 5;
+	message DepositConstraints {
+		message Constraints {
+			string criteria = 1;
+			string operator = 2;
+			string secondValue = 3;
+			string value = 4;
+			repeated string values = 5;
+		}
+		repeated Constraints constraints = 1;
+		string matchFiltersOption = 2;
+		string usage = 3;
+	}
+	DepositConstraints depositConstraints = 6;
+	bool isDefault = 7;
+	message LoanConstraints {
+		message Constraints {
+			string criteria = 1;
+			string operator = 2;
+			string secondValue = 3;
+			string value = 4;
+			repeated string values = 5;
+		}
+		repeated Constraints constraints = 1;
+		string matchFiltersOption = 2;
+		string usage = 3;
+	}
+	LoanConstraints loanConstraints = 8;
+	string state = 9;
+	repeated string usageRights = 10;
+}
+
+
+message TransactionChannelDetailRequest{
+    string transactionChannelId = 1;
+}

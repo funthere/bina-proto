@@ -1,6 +1,6 @@
-proto_generate:
-	mkdir -p src/los/generate
-	protoc --proto_path=./src/los/protobuf --go_out=./src/los/generate --go-grpc_out=require_unimplemented_servers=false:./src/los/generate ./src/los/protobuf/*.proto
+generate_go:
+	mkdir -p los/generated
+	protoc --proto_path=./los/protobuf --go_out=./los/generated --go-grpc_out=require_unimplemented_servers=false:./los/generated ./los/protobuf/*.proto
 
-	mkdir -p src/mambu/generate
-	protoc --proto_path=./src/mambu/protobuf --go_out=./src/mambu/generate --go-grpc_out=require_unimplemented_servers=false:./src/mambu/generate ./src/mambu/protobuf/*.proto
+	mkdir -p mambu/generated
+	protoc --proto_path=./mambu/protobuf --go_out=./mambu/generated --go-grpc_out=require_unimplemented_servers=false:./mambu/generated ./mambu/protobuf/*.proto

@@ -1,0 +1,197 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "general.proto";
+
+
+message LoanTransactionResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	LoanTransaction data = 3;
+	proto.Meta meta = 4;
+}
+
+message LoanTransaction {
+	message AccountBalances {
+		double advancePosition = 1;
+		double arrearsPosition = 2;
+		double expectedPrincipalRedraw = 3;
+		double principalBalance = 4;
+		double redrawBalance = 5;
+		double totalBalance = 6;
+	}
+	AccountBalances accountBalances = 1;
+	string adjustmentTransactionKey = 2;
+	message AffectedAmounts {
+		double deferredInterestAmount = 1;
+		double feesAmount = 2;
+		double fundersInterestAmount = 3;
+		double interestAmount = 4;
+		double interestFromArrearsAmount = 5;
+		double organizationCommissionAmount = 6;
+		double paymentHolidaysInterestAmount = 7;
+		double penaltyAmount = 8;
+		double principalAmount = 9;
+	}
+	AffectedAmounts affectedAmounts = 3;
+	double amount = 4;
+	string bookingDate = 5;
+	string branchKey = 6;
+	string centreKey = 7;
+	string creationDate = 8;
+	message Currency {
+		string code = 1;
+		string currencyCode = 2;
+	}
+	Currency currency = 9;
+	string encodedKey = 10;
+	string externalId = 11;
+	message Fees {
+		double amount = 1;
+		string name = 2;
+		string predefinedFeeKey = 3;
+		double taxAmount = 4;
+		string trigger = 5;
+	}
+	repeated Fees fees = 12;
+	string id = 13;
+	string installmentEncodedKey = 14;
+	string migrationEventKey = 15;
+	string notes = 16;
+	double originalAmount = 17;
+	string originalCurrencyCode = 18;
+	string originalTransactionKey = 19;
+	string parentAccountKey = 20;
+	string parentLoanTransactionKey = 21;
+	string prepaymentRecalculationMethod = 22;
+	message Taxes {
+		double deferredTaxOnInterestAmount = 1;
+		double taxOnFeesAmount = 2;
+		double taxOnInterestAmount = 3;
+		double taxOnInterestFromArrearsAmount = 4;
+		double taxOnPaymentHolidaysInterest = 5;
+		double taxOnPenaltyAmount = 6;
+		double taxRate = 7;
+	}
+	Taxes taxes = 23;
+	message Terms {
+		message InterestSettings {
+			double indexInterestRate = 1;
+			double interestRate = 2;
+		}
+		InterestSettings interestSettings = 1;
+		double periodicPayment = 2;
+		double principalPaymentAmount = 3;
+		double principalPaymentPercentage = 4;
+	}
+	Terms terms = 24;
+	string tillKey = 25;
+	message TransactionDetails {
+		string transactionChannelId = 1;
+		string transactionChannelKey = 2;
+	}
+	TransactionDetails transactionDetails = 26;
+	message TransferDetails {
+		string linkedDepositTransactionKey = 1;
+		string linkedLoanTransactionKey = 2;
+	}
+	TransferDetails transferDetails = 27;
+	string type = 28;
+	string userKey = 29;
+	string valueDate = 30;
+}
+
+message MakeDisbursementRequest {
+	string loanAccountId = 1;
+	double amount = 2;
+	string bookingDate = 3;
+	string externalId = 4;
+	message Fees {
+		double amount = 1;
+		double percentage = 2;
+		string predefinedFeeKey = 3;
+	}
+	repeated Fees fees = 5;
+	string firstRepaymentDate = 6;
+	string notes = 7;
+	string originalCurrencyCode = 8;
+	bool shiftAdjustableInterestPeriods = 9;
+	message TransactionDetails {
+		string transactionChannelId = 1;
+		string transactionChannelKey = 2;
+	}
+	TransactionDetails transactionDetails = 10;
+	message TransferDetails {
+		string linkedAccountId = 1;
+		string linkedAccountKey = 2;
+	}
+	TransferDetails transferDetails = 11;
+}
+
+message ApplyFeeLoanRequest {
+	string loanAccountId = 1;
+	double amount = 2;
+	string bookingDate = 3;
+	string externalId = 4;
+	string firstRepaymentDate = 5;
+	double installmentNumber = 6;
+	string notes = 7;
+	string predefinedFeeKey = 8;
+}
+
+message LoanTransactionDetailRequest {
+	string loanTransactionId = 1;
+	string detailsLevel = 2;
+}
+
+message MakeRepaymentRequest {
+	string loanAccountId = 1;
+	double amount = 2;
+	string bookingDate = 3;
+	message CustomPaymentAmounts {
+		double amount = 1;
+		string customPaymentAmountType = 2;
+		string predefinedFeeKey = 3;
+		double taxOnAmount = 4;
+	}
+	repeated CustomPaymentAmounts customPaymentAmounts = 4;
+	string externalId = 5;
+	string installmentEncodedKey = 6;
+	string notes = 7;
+	string originalCurrencyCode = 8;
+	string prepaymentRecalculationMethod = 9;
+	message TransactionDetails {
+		string transactionChannelId = 1;
+		string transactionChannelKey = 2;
+	}
+	TransactionDetails transactionDetails = 10;
+}
+
+message LoanTransactionAdjustRequest {
+	string loanTransactionId = 1;
+	string bookingDate = 2;
+	message Installments {
+		double amountToAdd = 1;
+		string installmentKey = 2;
+	}
+	repeated Installments installments = 3;
+	string notes = 4;
+}
+
+message LoanTransactionListRequest {
+	string loanAccountId = 1;
+	uint32 page = 2;
+	uint32 limit = 3;
+	string paginationDetails = 4;
+	string detailsLevel = 5;
+}
+
+message LoanTransactionListResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	repeated LoanTransaction data = 3;
+	proto.Meta meta = 4;
+}

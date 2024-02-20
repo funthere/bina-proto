@@ -1,0 +1,35 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "deposit_account.proto";
+import "deposit_transaction.proto";
+import "deposit_product.proto";
+
+service DepositAccountService {
+    rpc DepositAccountDetail (DepositAccountDetailRequest) returns (DepositAccountResponse) {}
+    rpc DepositAccountCreate (DepositCreateRequest) returns (DepositAccountResponse) {}
+    rpc DepositChangeState (DepositChangeStateRequest) returns (DepositAccountResponse) {}
+    rpc DepositAccountSearch (DepositAccountSearchRequest) returns (DepositAccountListResponse) {}
+    rpc DepositAccountList (DepositAccountListParamRequest) returns (DepositAccountListResponse) {}
+}
+
+service DepositTransactionService {
+    rpc MakeWithdrawal (DepositTransactionRequest) returns (DepositTransactionResponse) {}
+    rpc MakeDeposit (DepositTransactionRequest) returns (DepositTransactionResponse) {}
+    rpc MakeTransfer (TransferTransactionRequest) returns (DepositTransactionResponse) {}
+    rpc Adjustment (AdjustTransactionRequest) returns (DepositTransactionResponse) {}
+    rpc WithdrawalTrx (TransactionDepositRequest) returns (TransactionDepositResponse) {}
+    rpc ApplyFee (FeeTransactionRequest) returns (FeeTransactionResponse) {}
+    rpc DepositTrx (TransactionDepositRequest) returns (TransactionDepositResponse) {}
+    rpc TransferTrx (TransactionTransferRequest) returns (TransactionDepositResponse) {}
+    rpc ListTransaction (DepositTransactionListRequest) returns (DepositTransactionListResponse) {}
+    rpc ReversalTransaction (ReverseDepositTransactionRequest) returns (TransactionDepositResponse) {}
+    rpc SearchListTransaction (DepositTransactionSearchRequest) returns (DepositTransactionListResponse) {}
+}
+
+service DepositProductService {
+    rpc DepositProductDetail (DepositProductDetailRequest) returns (DepositProductResponse) {}
+}

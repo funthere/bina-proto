@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package protobuf.los;
+option go_package = "./golang";
+import "los_general.proto";
+
+// import "google/protobuf/timestamp.proto";
+
+service CreditArrangement {
+    rpc CreateCreditArrangement(ReqCreditArrangement) returns (ResCreateCreditArrangement) {}
+}
+
+message ReqCreditArrangement {
+    string customerNumber = 1;
+    string accountNumber = 2;
+    double amount = 3;
+    string startDate = 4;
+    string expireDate = 5;
+    string lastModifiedDate = 6;
+}
+
+message ResCreateCreditArrangement {
+    string response_code = 1;
+    string response_message = 2;
+    Meta meta = 3;
+    DataCreateCreditArrangement data = 4;
+}
+message DataCreateCreditArrangement {
+    string id = 1;
+    double amount = 2;
+    string startDate = 3;
+    string expireDate = 4;
+    string lastModifiedDate = 5;
+    string notes = 6;
+}
+
+message ErrorMambuSend {
+    uint32 errorCode = 1;
+    string errorSource = 2;
+    string errorReason = 3;
+}

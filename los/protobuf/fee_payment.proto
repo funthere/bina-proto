@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package protobuf.los;
+option go_package = "./golang";
+import "los_general.proto";
+
+
+service FeePayment {
+    rpc CreateFeePayment(ReqFeePayment) returns (ResFeePayment) {}
+}
+
+message ReqFeePayment {
+    string loanId = 1;
+    string sourceAccountNumber = 2;
+    string notaryAccountNumber = 3;
+    double administration = 4;
+    double provision = 5;
+    double appraisal = 6;
+    double insurances = 7;
+    double notary = 8;
+    double totalAmount = 9;
+}
+
+message ResFeePayment {
+    string response_code = 1;
+    string response_message = 2;
+    Meta meta = 3;
+    DataFeePayment data = 4;
+}
+message DataFeePayment {
+    string administration = 3;
+    string provision = 4;
+    string appraisal = 5;
+    string insurances = 6;
+    string notary = 7;
+}

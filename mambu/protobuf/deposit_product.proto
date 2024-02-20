@@ -1,0 +1,141 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "general.proto";
+
+message DepositProductResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	DepositProduct data = 3;
+    proto.Meta meta = 4;
+}
+
+message DepositProductDetailRequest {
+    string depositProductId = 1;
+    string detailsLevel = 2;
+}
+
+message DepositProduct {
+	string encodedKey = 1;
+	string id = 2;
+	string creationDate = 3;
+	string lastModifiedDate = 4;
+	string name = 5;
+	string notes = 6;
+	string type = 7;
+	string category = 8;
+	string state = 9;
+	message NewAccountSettings {
+		string idGeneratorType = 1;
+		string idPattern = 2;
+	}
+	NewAccountSettings newAccountSettings = 10;
+	message InterestSettings {
+		bool interestPaidIntoAccount = 1;
+		message InterestRateSettings {
+			message InterestRate {
+				double minValue = 1;
+				double maxValue = 2;
+				double defaultValue = 3;
+			}
+			InterestRate interestRate = 1;
+			string interestRateSource = 2;
+			string interestRateTerms = 3;
+			string interestChargeFrequency = 4;
+			uint32 interestChargeFrequencyCount = 5;
+			string encodedKey = 6;
+			bool accrueInterestAfterMaturity = 7;
+			bool allowNegativeInterestRate = 8;
+		}
+		InterestRateSettings interestRateSettings = 2;
+		string interestCalculationBalance = 3;
+		message InterestPaymentSettings {
+			string interestPaymentPoint = 1;
+		}
+		InterestPaymentSettings interestPaymentSettings = 4;
+		bool collectInterestWhenLocked = 5;
+		string daysInYear = 6;
+	}
+	InterestSettings interestSettings = 11;
+	message OverdraftSettings {
+		bool allowOverdraft = 1;
+		uint32 maxOverdraftLimit = 2;
+		bool allowTechnicalOverdraft = 3;
+	}
+	OverdraftSettings overdraftSettings = 12;
+	message FeesSettings {
+		bool allowArbitraryFees = 1;
+		message Fees {
+			string encodedKey = 1;
+			string name = 2;
+			string id = 3;
+			uint32 amount = 4;
+			string amountCalculationMethod = 5;
+			string trigger = 6;
+			string feeApplication = 7;
+			string state = 8;
+			string creationDate = 9;
+			string lastModifiedDate = 10;
+			message AccountingRules {
+				string encodedKey = 1;
+				string glAccountKey = 2;
+				string financialResource = 3;
+			}
+			repeated AccountingRules accountingRules = 11;
+		}
+		repeated Fees fees = 2;
+	}
+	FeesSettings feesSettings = 13;
+	message AccountingSettings {
+		string accountingMethod = 1;
+		string interestAccruedAccountingMethod = 2;
+		message AccountingRules {
+			string encodedKey = 1;
+			string glAccountKey = 2;
+			string financialResource = 3;
+		}
+		repeated AccountingRules accountingRules = 3;
+	}
+	AccountingSettings accountingSettings = 14;
+	message InternalControls {
+		uint32 dormancyPeriodDays = 1;
+		uint64 maxWithdrawalAmount = 2;
+	}
+	InternalControls internalControls = 15;
+	message MaturitySettings {
+		message MaturityPeriod {
+
+		}
+		MaturityPeriod maturityPeriod = 1;
+		string maturityPeriodUnit = 2;
+	}
+	MaturitySettings maturitySettings = 16;
+	message AvailabilitySettings {
+		message BranchSettings {
+			bool forAllBranches = 1;
+			repeated string availableProductBranches = 2;
+		}
+		BranchSettings branchSettings = 1;
+		repeated string availableFor = 2;
+	}
+	AvailabilitySettings availabilitySettings = 17;
+	message OffsetSettings {
+		bool allowOffset = 1;
+	}
+	OffsetSettings offsetSettings = 18;
+	message TaxSettings {
+		bool withholdingTaxEnabled = 1;
+	}
+	TaxSettings taxSettings = 19;
+	message CurrencySettings {
+		message Currencies {
+			string currencyCode = 1;
+			string code = 2;
+		}
+		repeated Currencies currencies = 1;
+	}
+	CurrencySettings currencySettings = 20;
+}

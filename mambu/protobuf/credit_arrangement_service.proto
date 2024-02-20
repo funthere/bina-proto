@@ -1,0 +1,16 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "credit_arrangement.proto";
+
+service CreditArrangementService {
+    rpc CreditArrangementCreate (CreditArrangementCreateRequest) returns (CreditArrangementResponse) {}
+    rpc CreditArrangementAddAccount (CreditArrangementAccountRequest) returns (CreditArrangementAccountResponse) {}
+    rpc CreditArrangementRemoveAccount (CreditArrangementAccountRequest) returns (CreditArrangementAccountResponse) {}
+    rpc CreditArrangementUpdate (CreditArrangementUpdateRequest) returns (CreditArrangementResponse) {}
+    rpc CreditArrangementDetail (CreditArrangementDetailRequest) returns (CreditArrangementResponse) {}
+    rpc CreditArrangementSearch (CreditArrangementSearchRequest) returns (CreditArrangementListResponse) {}
+}

@@ -1,0 +1,11 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "transaction_channel.proto";
+
+service TransactionChannelService {
+    rpc TransactionChannelDetail (TransactionChannelDetailRequest) returns (TransactionChannelResponse) {}
+}

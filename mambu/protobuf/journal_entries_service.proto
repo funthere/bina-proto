@@ -1,0 +1,11 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "journal_entries.proto";
+
+service JournalEntriesService {
+    rpc ListJournalEntries (JournalEntriesListRequest) returns (JournalEntriesResponse) {}
+}

@@ -1,0 +1,101 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "general.proto";
+
+message JournalEntriesResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	repeated JournalEntries data = 3;
+    proto.Meta meta = 4;
+}
+
+message JournalEntriesListRequest {
+	uint32 page = 1;
+	uint32 limit = 2;
+	string paginationDetails = 3;
+	string from = 4;
+	string to = 5;
+	string branchId = 6;
+	string glAccountId = 7;
+}
+
+message JournalEntriesRequest {
+	string branchId = 1;
+	repeated Credits credits = 2;
+	string date = 3;
+	repeated Debits debits = 4;
+	string notes = 5;
+	string transactionId = 6;
+}
+
+message Credits {
+    double amount = 1;
+    string glAccount = 2;
+}
+
+message Debits {
+    double amount = 1;
+    string glAccount = 2;
+}
+
+message JournalEntries {
+	string accountKey = 1;
+	double amount = 2;
+	string assignedBranchKey = 3;
+	string bookingDate = 4;
+	string creationDate = 5;
+	string encodedKey = 6;
+	uint32 entryID = 7;
+	ForeignAmount foreignAmount = 8;
+	GlAccount glAccount = 9;
+	string notes = 10;
+	string productKey = 11;
+	string productType = 12;
+	string reversalEntryKey = 13;
+	string transactionId = 14;
+	string type = 15;
+	string userKey = 16;
+}
+
+message ForeignAmount {
+    message AccountingRate {
+        string encodedKey = 1;
+        string endDate = 2;
+        string fromCurrencyCode = 3;
+        double rate = 4;
+        string startDate = 5;
+        string toCurrencyCode = 6;
+    }
+    AccountingRate accountingRate = 1;
+    double amount = 2;
+    message Currency {
+        string code = 1;
+        string currencyCode = 2;
+    }
+    Currency currency = 3;
+}
+
+message GlAccount {
+    bool activated = 1;
+    bool allowManualJournalEntries = 2;
+    double balance = 3;
+    string creationDate = 4;
+    message Currency {
+        string code = 1;
+        string currencyCode = 2;
+    }
+    Currency currency = 5;
+    string description = 6;
+    string encodedKey = 7;
+    string glCode = 8;
+    string lastModifiedDate = 9;
+    string migrationEventKey = 10;
+    string name = 11;
+    bool stripTrailingZeros = 12;
+    string type = 13;
+    string usage = 14;
+}

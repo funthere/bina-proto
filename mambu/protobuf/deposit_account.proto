@@ -1,0 +1,182 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "general.proto";
+
+message DepositAccountResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	DepositAccount data = 3;
+    proto.Meta meta = 4;
+}
+
+message DepositAccountDetailRequest {
+    string depositAccountId = 1;
+}
+
+message DepositAccount {
+    string accountHolderKey = 1;
+	string accountHolderType = 2;
+	string accountState = 3;
+	string accountType = 4;
+	AccruedAmounts accruedAmounts = 5;
+	string activationDate = 6;
+	string approvedDate = 7;
+	string assignedBranchKey = 8;
+	string assignedCentreKey = 9;
+	string assignedUserKey = 10;
+	Balances balances = 11;
+	string closedDate = 12;
+	string creationDate = 13;
+	string creditArrangementKey = 14;
+	string currencyCode = 15;
+	string encodedKey = 16;
+	string id = 17;
+	InterestSettings interestSettings = 18;
+	InternalControls internalControls = 19;
+	string lastAccountAppraisalDate = 20;
+	string lastInterestCalculationDate = 21;
+	string lastInterestReviewDate = 22;
+	string lastInterestStoredDate = 23;
+	string lastModifiedDate = 24;
+	string lastOverdraftInterestReviewDate = 25;
+	string lastSetToArrearsDate = 26;
+	repeated string linkedSettlementAccountKeys = 27;
+	string lockedDate = 28;
+	string maturityDate = 29;
+	string migrationEventKey = 30;
+	string name = 31;
+	string notes = 32;
+	OverdraftInterestSettings overdraftInterestSettings = 33;
+	OverdraftSettings overdraftSettings = 34;
+	string productTypeKey = 35;
+	string withholdingTaxSourceKey = 36;
+}
+
+
+message AccruedAmounts {
+    double interestAccrued = 1;
+    double negativeInterestAccrued = 2;
+    double overdraftInterestAccrued = 3;
+    double technicalOverdraftInterestAccrued = 4;
+}
+
+message Balances {
+    double availableBalance = 1;
+    double blockedBalance = 2;
+    double feesDue = 3;
+    double forwardAvailableBalance = 4;
+    double holdBalance = 5;
+    double lockedBalance = 6;
+    double overdraftAmount = 7;
+    double overdraftInterestDue = 8;
+    double technicalOverdraftAmount = 9;
+    double technicalOverdraftInterestDue = 10;
+    double totalBalance = 11;
+}
+
+message InterestSettings {
+    InterestPaymentSettings interestPaymentSettings = 1;
+    InterestRateSettings interestRateSettings = 2;
+}
+
+message InternalControls {
+    double maxDepositBalance = 1;
+    double maxWithdrawalAmount = 2;
+    double recommendedDepositAmount = 3;
+    double targetAmount = 4;
+}
+
+message OverdraftInterestSettings {
+    InterestRateSettings interestRateSettings = 1;
+}
+
+message OverdraftSettings {
+    bool allowOverdraft = 1;
+    string overdraftExpiryDate = 2;
+    uint32 overdraftLimit = 3;
+}
+
+
+message InterestRateSettings {
+    string encodedKey = 1;
+    string interestChargeFrequency = 2;
+    uint32 interestChargeFrequencyCount = 3;
+    double interestRate = 4;
+    uint32 interestRateReviewCount = 5;
+    string interestRateReviewUnit = 6;
+    string interestRateSource = 7;
+    string interestRateTerms = 8;
+    repeated InterestRateTiers interestRateTiers = 9;
+    double interestSpread = 10;
+}
+
+message InterestRateTiers {
+    string encodedKey = 1;
+    double endingBalance = 2;
+    uint32 endingDay = 3;
+    double interestRate = 4;
+}
+
+
+message InterestPaymentSettings {
+    repeated InterestPaymentDates interestPaymentDates = 1;
+    string interestPaymentPoint = 2;
+}
+
+
+message InterestPaymentDates {
+    uint32 day = 1;
+    uint32 month = 2;
+}
+
+message DepositCreateRequest {
+	string accountHolderKey = 1;
+	string accountHolderType = 2;
+	string name = 3;
+	string assignedBranchKey = 4;
+	string productTypeKey = 5;
+	string notes = 6;
+	message InternalControls {
+		double maxDepositBalance = 1;
+		double maxWithdrawalAmount = 2;
+		double recommendedDepositAmount = 3;
+		double targetAmount = 4;
+	}
+	InternalControls internalControls = 7;
+}
+
+message DepositChangeStateRequest {
+	string depositAccountId = 1;
+	string action = 2;
+	string notes = 3;
+}
+
+message DepositAccountSearchRequest {
+	proto.Parameter parameter = 1;
+	repeated proto.FilterCriteria filterCriteria = 2;
+	proto.SortingCriteria sortingCriteria = 3;
+}
+
+message DepositAccountListResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	repeated DepositAccount data = 3;
+    proto.Meta meta = 4;
+}
+
+message DepositAccountListParamRequest {
+	uint32 page = 1;
+	uint32 limit = 2;
+	string paginationDetails = 3;
+	string detailsLevel = 4;
+	string creditOfficerUsername = 5;
+	string branchId = 6;
+	string centreId = 7;
+	string accountState = 8;
+	string accountHolderType = 9;
+	string accountHolderId = 10;
+}

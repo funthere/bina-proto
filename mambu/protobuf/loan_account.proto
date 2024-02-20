@@ -1,0 +1,396 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "general.proto";
+
+message LoanAccountResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	LoanAccount data = 3;
+	proto.Meta meta = 4;
+}
+
+message LoanAccountDetailRequest {
+    string LoanAccountId = 1;
+    string detailsLevel = 2;
+}
+
+message LoanAccount {
+	string encodedKey = 1;
+	string id = 2;
+	string accountHolderType = 3;
+	string accountHolderKey = 4;
+	string creationDate = 5;
+	string approvedDate = 6;
+	string lastModifiedDate = 7;
+	string activationTransactionKey = 8;
+	string lastAccountAppraisalDate = 9;
+	string accountState = 10;
+	string productTypeKey = 11;
+	string loanName = 12;
+	double loanAmount = 13;
+	string paymentMethod = 14;
+	string assignedBranchKey = 15;
+	string notes = 16;
+	double accruedInterest = 17;
+	double interestFromArrearsAccrued = 18;
+	string lastInterestAppliedDate = 19;
+	double accruedPenalty = 20;
+	bool allowOffset = 21;
+	double arrearsTolerancePeriod = 22;
+	AccountArrearsSettings accountArrearsSettings = 23;
+	string latePaymentsRecalculationMethod = 24;
+	Balance balances = 25;
+	DisbursementDetails disbursementDetails = 26;
+	PrepaymentSettings prepaymentSettings = 27;
+	PenaltySettings penaltySettings = 28;
+	ScheduleSettings scheduleSettings = 29;
+	InterestSetting interestSettings = 30;
+	string futurePaymentsAcceptance = 31;
+	Currency currency = 32;
+}
+
+message AccountArrearsSettings {
+    string encodedKey = 1;
+    string toleranceCalculationMethod = 2;
+    string dateCalculationMethod = 3;
+    string nonWorkingDaysMethod = 4;
+    double tolerancePeriod = 5;
+}
+
+message Balance {
+    double redrawBalance = 1;
+    double principalDue = 2;
+    double principalPaid = 3;
+    double principalBalance = 4;
+    double interestDue = 5;
+    double interestPaid = 6;
+    double interestBalance = 7;
+    double interestFromArrearsBalance = 8;
+    double interestFromArrearsDue = 9;
+    double interestFromArrearsPaid = 10;
+    double feesDue = 11;
+    double feesPaid = 12;
+    double feesBalance = 13;
+    double penaltyDue = 14;
+    double penaltyPaid = 15;
+    double penaltyBalance = 16;
+    double holdBalance = 17;
+}
+
+message DisbursementDetails {
+    string encodedKey = 1;
+    string expectedDisbursementDate = 2;
+    string disbursementDate = 3;
+    TransactionDetail transactionDetails = 4;
+    repeated Fee fees = 5;
+}
+
+message TransactionDetail {
+    string encodedKey = 1;
+    string transactionChannelKey = 2;
+    bool internalTransfer = 3;
+}
+
+message Fee {
+    string encodedKey = 1;
+    double amount = 2;
+    string predefinedFeeEncodedKey = 3;
+}
+
+message PenaltySettings {
+    string loanPenaltyCalculationMethod = 1;
+}
+
+message ScheduleSettings {
+    bool hasCustomSchedule = 1;
+    double principalRepaymentInterval = 2;
+    double gracePeriod = 3;
+    string gracePeriodType = 4;
+    double repaymentInstallments = 5;
+    double repaymentPeriodCount = 6;
+    string scheduleDueDatesMethod = 7;
+    double periodicPayment = 8;
+    string repaymentPeriodUnit = 9;
+    string repaymentScheduleMethod = 10;
+}
+
+message InterestSetting {
+    string interestRateSource = 1;
+    bool accrueInterestAfterMaturity = 2;
+    string interestApplicationMethod = 3;
+    string interestBalanceCalculationMethod = 4;
+    string interestCalculationMethod = 5;
+    string interestChargeFrequency = 6;
+    double interestRate = 7;
+    string interestType = 8;
+    bool accrueLateInterest = 9;
+}
+
+message PrepaymentSettings {
+
+}
+
+message Currency {
+    string currencyCode = 1;
+    string code = 2;
+}
+
+message LoadAccountCreateRequest {
+	string accountHolderKey = 1;
+	string accountHolderType = 2;
+	string loanName = 3;
+	double loanAmount = 4;
+	string productTypeKey = 5;
+	message InterestSettings {
+		double interestRate = 1;
+	}
+	InterestSettings interestSettings = 6;
+	message ScheduleSettings {
+		double gracePeriod = 1;
+		string gracePeriodType = 2;
+		uint32 repaymentInstallments = 3;
+		uint32 repaymentPeriodCount = 4;
+		string repaymentPeriodUnit = 5;
+		string repaymentScheduleMethod = 6;
+	}
+	ScheduleSettings scheduleSettings = 7;
+	message PenaltySettings {
+		string loanPenaltyCalculationMethod = 1;
+		double penaltyRate = 2;
+	}
+	PenaltySettings penaltySettings = 8;
+}
+
+message LoanChangeStateRequest {
+	string loanAccountId = 1;
+	string action = 2;
+	string notes = 3;
+}
+
+message LoanAccountPayOffRequest {
+	string loanAccountId = 1;
+	string externalId = 2;
+	string notes = 3;
+	message PayOffAdjustableAmounts {
+		double feesPaid = 1;
+		double interestPaid = 2;
+		double penaltyPaid = 3;
+	}
+	PayOffAdjustableAmounts payOffAdjustableAmounts = 4;
+	message TransactionDetails {
+		string transactionChannelId = 1;
+		string transactionChannelKey = 2;
+	}
+	TransactionDetails transactionDetails = 5;
+}
+
+message LoanAccountPayOffResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	LoanAccountPayOff data = 3;
+	proto.Meta meta = 4;
+}
+
+message LoanAccountPayOff {
+	string loanAccountId = 1;
+}
+
+message LoanAccountPreviewScheduleRequest {
+	message DisbursementDetails {
+		string expectedDisbursementDate = 1;
+		message Fees {
+			double amount = 1;
+			double percentage = 2;
+			string predefinedFeeEncodedKey = 3;
+		}
+		repeated Fees fees = 2;
+		string firstRepaymentDate = 3;
+	}
+	DisbursementDetails disbursementDetails = 1;
+	double interestCommission = 2;
+	message InterestSettings {
+		message AccountInterestRateSettings {
+			string indexSourceKey = 1;
+			double interestRate = 2;
+			double interestRateCeilingValue = 3;
+			double interestRateFloorValue = 4;
+			double interestRateReviewCount = 5;
+			string interestRateReviewUnit = 6;
+			string interestRateSource = 7;
+			double interestSpread = 8;
+			string validFrom = 9;
+		}
+		repeated AccountInterestRateSettings accountInterestRateSettings = 1;
+		double interestRate = 2;
+		double interestSpread = 3;
+	}
+	InterestSettings interestSettings = 3;
+	double loanAmount = 4;
+	message PlannedInstallmentFees {
+		double amount = 1;
+		string applyOnDate = 2;
+		string installmentKey = 3;
+		double installmentNumber = 4;
+		string predefinedFeeKey = 5;
+	}
+	repeated PlannedInstallmentFees plannedInstallmentFees = 5;
+	string productTypeKey = 6;
+	message ScheduleSettings {
+		repeated int64 fixedDaysOfMonth = 1;
+		double gracePeriod = 2;
+		message PaymentPlan {
+			double amount = 1;
+			double toInstallment = 2;
+		}
+		repeated PaymentPlan paymentPlan = 3;
+		double periodicPayment = 4;
+		double principalRepaymentInterval = 5;
+		double repaymentInstallments = 6;
+		double repaymentPeriodCount = 7;
+		string repaymentPeriodUnit = 8;
+	}
+	ScheduleSettings scheduleSettings = 7;
+	double topUpAmount = 8;
+	message Tranches {
+		double amount = 1;
+		message DisbursementDetails {
+			string disbursementTransactionKey = 1;
+			string expectedDisbursementDate = 2;
+		}
+		DisbursementDetails disbursementDetails = 2;
+		message Fees {
+			double amount = 1;
+			double percentage = 2;
+			string predefinedFeeEncodedKey = 3;
+		}
+		repeated Fees fees = 3;
+		double trancheNumber = 4;
+	}
+	repeated Tranches tranches = 9;
+}
+
+message LoanAccountPreviewScheduleResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	LoanAccountPreviewSchedule data = 3;
+	proto.Meta meta = 4;
+}
+
+message LoanAccountPreviewSchedule {
+	message Currency {
+		string code = 1;
+		string currencyCode = 2;
+	}
+	Currency currency = 1;
+	message Installments {
+		string dueDate = 1;
+		string encodedKey = 2;
+		message Fee {
+			message Amount {
+				double due = 1;
+				double expected = 2;
+				double expectedUnapplied = 3;
+				double paid = 4;
+			}
+			Amount amount = 1;
+			message Tax {
+				double due = 1;
+				double expected = 2;
+				double paid = 3;
+			}
+			Tax tax = 2;
+		}
+		Fee fee = 3;
+		message FeeDetails {
+			message Amount {
+				double due = 1;
+				double expected = 2;
+				double paid = 3;
+				double reduced = 4;
+			}
+			Amount amount = 1;
+			string encodedKey = 2;
+			string id = 3;
+			string name = 4;
+			message Tax {
+				double due = 1;
+				double expected = 2;
+				double paid = 3;
+				double reduced = 4;
+			}
+			Tax tax = 5;
+		}
+		repeated FeeDetails feeDetails = 4;
+		message Interest {
+			message Amount {
+				double due = 1;
+				double expected = 2;
+				double paid = 3;
+			}
+			Amount amount = 1;
+			message Tax {
+				double due = 1;
+				double expected = 2;
+				double paid = 3;
+			}
+			Tax tax = 2;
+		}
+		Interest interest = 5;
+		bool isPaymentHoliday = 6;
+		string lastPaidDate = 7;
+		string number = 8;
+		string parentAccountKey = 9;
+		message Penalty {
+			message Amount {
+				double due = 1;
+				double expected = 2;
+				double paid = 3;
+			}
+			Amount amount = 1;
+			message Tax {
+				double due = 1;
+				double expected = 2;
+				double paid = 3;
+			}
+			Tax tax = 2;
+		}
+		Penalty penalty = 10;
+		message Principal {
+			message Amount {
+				double due = 1;
+				double expected = 2;
+				double paid = 3;
+			}
+			Amount amount = 1;
+		}
+		Principal principal = 11;
+		string repaidDate = 12;
+		string state = 13;
+	}
+	repeated Installments installments = 2;
+	double totalAmount = 3;
+}
+
+message LoanAccountPreviewPayOffAmountRequest {
+	string loanAccountId = 1;
+	string valueDate = 2;
+}
+
+message LoanAccountPreviewPayOffAmountResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	LoanAccountPreviewPayOffAmount data = 3;
+	proto.Meta meta = 4;
+}
+message LoanAccountPreviewPayOffAmount {
+	double earlyRepaymentCharge = 1;
+	double feeBalance = 2;
+	double interestBalance = 3;
+	double penaltyBalance = 4;
+	double principalBalance = 5;
+	double totalBalance = 6;
+}

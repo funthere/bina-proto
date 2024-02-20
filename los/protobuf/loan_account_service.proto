@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package protobuf.los;
+
+option go_package = "./golang";
+
+import "laon_account_request.proto";
+import "loan_account_response.proto";
+
+
+service LoanAccountService{
+    rpc CreateLoanAccount(ReqLoanAccount)returns(ResCreateLoanAccount) {}
+    rpc GetLoanAccountDetail(ReqGetLoanAccount)returns(ResGetLoanAccount) {}
+    rpc GetLoanPreview(ReqLoanPreview)returns(ResLoanPreview) {}
+}

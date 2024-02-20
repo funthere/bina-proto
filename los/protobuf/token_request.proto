@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package protobuf.los;
+
+option go_package = "./golang";
+
+message RequestToken {
+    string loginClient = 1;
+    string clientId = 2;
+    string clientSecret = 3;
+    string refreshToken = 4;
+}
+
+
+message RequestSignature {
+    string secretKey = 1;
+    string method = 2;
+    string url = 3;
+    string timeStamp = 4;
+    string data = 5;
+}
