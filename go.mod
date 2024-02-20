@@ -1,4 +1,4 @@
-module gitlab.gcp.bankina.id/bina-internal/bina-proto
+module github.com/funthere/bina-proto
 
 go 1.21.5
 
