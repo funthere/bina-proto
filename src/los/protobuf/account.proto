@@ -1,0 +1,168 @@
+syntax = "proto3";
+
+package protobuf.los;
+option go_package = "./golang";
+import "los_general.proto";
+
+
+service InquiryAccount {
+	rpc GetAccount(RequestAccount) returns (ResponseAccount) {}
+    rpc GetAccountBalance(ReqAccountBalance) returns (ResAccountBalance) {}
+	rpc GetCustomerIndividual(ReqCustomerInfo) returns (ResCustomerIndividualInfo) {}
+	rpc GetCustomerCIF(ReqAccountCIF) returns (ResAccountCIF) {}
+	rpc CreateCustomer(ReqCreateCustomer) returns (ResponseAccount) {}
+}
+
+message ReqAccountCIF {
+	string cif = 1;
+}
+message ResAccountCIF {
+    string response_code = 1;
+    string response_message = 2;
+    Meta meta = 3;
+    DataAccountCIF data = 4;
+}
+message DataAccountCIF {
+	string encodedKey = 1;
+	string id = 2;
+	string customerName = 3;
+	string mobilePhone = 4;
+	string emailAddress = 5;
+	string birthDate = 6;
+	string birthPlace = 7;
+	string gender = 8;
+	string notes = 9;
+	string accountNumber = 10;
+	string address = 11;
+	string motherName = 12;
+	string cellularNo = 13;
+}
+message Address {
+	string city = 1;
+	string country = 2;
+	string indexInList = 3;
+	string latitude = 4;
+	string line1 = 5;
+	string longitude = 6;
+	string postcode = 7;
+	string region = 8;
+
+	string encodedKey = 9;
+	string parentKey = 10;
+	string line2 = 11;
+}
+
+message ReqAccountBalance {
+	string dateTime = 1;
+	string referenceNumber = 2;
+    string accountNumber = 3;
+	string transactionType = 4;
+}
+message ResAccountBalance {
+    string response_code = 1;
+    string response_message = 2;
+    Meta meta = 3;
+    AccountBalance data = 4;
+}
+message AccountBalance {
+	string accountNumber = 1;
+	string accountName = 2;
+	string accountType = 3;
+	string productCode = 4;
+	string productName = 5;
+	string currency = 6;
+	double workingBalance = 7;
+	string referenceNumber = 8;
+	string dateTime = 9;
+	string source = 10;
+}
+
+message ReqCustomerInfo {
+	string transactionType = 1;
+	string referenceNumber = 2;
+	string dateTime = 3;
+	string npwp = 4;
+	string customerNo = 5;
+	string accountNumber = 6;
+}
+message ResCustomerIndividualInfo {
+    string response_code = 1;
+    string response_message = 2;
+    Meta meta = 3;
+    ResCustomerIndividualInfoData data = 4;
+}
+message ResCustomerIndividualInfoData {
+	string customerNo = 1;
+	string customerName = 2;
+	string gender = 3;
+	string address = 4;
+	string phoneNo = 5;
+	string cellularNo = 6;
+	string birthDate = 7;
+	string birthPlace = 8;
+	string motherName = 9;
+	string legalDocName = 10;
+	string legalID = 11;
+	string legalDocExp = 12;
+	string email = 13;
+	string branchCode = 14;
+	string sector = 15;
+	string industry = 16;
+	string country = 17;
+	string nationality = 18;
+	string spouseId = 19;
+	string spouseName = 20;
+	string lastEducation = 21;
+	string religion = 22;
+	string occupation = 23;
+	string incomeRange = 24;
+	string sourceOfFund = 25;
+	string sourceOfIncome = 26;
+	string province = 27;
+	string city = 28;
+	string referenceNumber = 29;
+	string dateTime = 30;
+}
+
+message RequestAccount {
+    string accountNumber = 1;
+}
+message ReqCreateCustomer {
+	string accountNumber = 1;
+	string customerType = 2;
+	string partnerId = 3;
+	string cif = 4;
+	string cifEncodeKey = 5;
+	string customerName = 6;
+	string address = 7;
+	string homePhone = 8;
+	string officePhone = 9;
+	string birthDate = 10;
+	string birthPlace = 11;
+	string legalDocName = 12;
+	string legalID = 13;
+	string legalDocExp = 14;
+	string email = 15;
+	string npwp = 16;
+	string occupation = 17;
+	string city = 18;
+	string country = 19;
+	string source = 20;
+	string coreId = 21;
+}
+message DataAccount {
+	string id = 1;
+	string partnerId = 2;
+	string accountNumber = 3;
+	string cif = 4;
+	string cifEncodeKey = 5;
+	string customerType = 6;
+	string createdAt = 8;
+}
+
+message ResponseAccount {
+    string response_code = 1;
+    string response_message = 2;
+    Meta meta = 3;
+    DataAccount data = 4;
+}

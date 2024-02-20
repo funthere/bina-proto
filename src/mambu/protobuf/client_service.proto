@@ -1,0 +1,14 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "client.proto";
+
+service ClientService {
+    rpc ClientDetail (ClientDetailRequest) returns (ClientResponse) {}
+    rpc CreateClient (ClientCreateRequest) returns (ClientResponse) {}
+    rpc UpdateClient (ClientUpdateRequest) returns (ClientResponse) {}
+    rpc SearchClient (ClientSearchRequest) returns (ClientListResponse) {}
+}

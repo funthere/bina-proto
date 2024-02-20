@@ -1,0 +1,107 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+import "general.proto";
+
+message ClientResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	Client data = 3;
+    proto.Meta meta = 4;
+}
+
+message ClientDetailRequest {
+    string clientId = 1;
+    string detailsLevel = 2;
+}
+
+message Client {
+	string encodedKey = 1;
+	string id = 2;
+	string state = 3;
+	string creationDate = 4;
+	string lastModifiedDate = 5;
+	string activationDate = 6;
+	string approvedDate = 7;
+	string firstName = 8;
+	string lastName = 9;
+	string mobilePhone = 10;
+	string emailAddress = 11;
+	string preferredLanguage = 12;
+	string birthDate = 13;
+	string gender = 14;
+	string notes = 15;
+	string assignedBranchKey = 16;
+	string clientRoleKey = 17;
+	uint32 loanCycle = 18;
+	uint32 groupLoanCycle = 19;
+	repeated Addresses addresses = 20;
+	_cfsPersonalData _cfsPersonalData = 21;
+}
+
+message _cfsPersonalData {
+    string cfKtpNo = 1;
+}
+
+message Addresses {
+    string encodedKey = 1;
+    string parentKey = 2;
+    string line1 = 3;
+    string line2 = 4;
+    string city = 5;
+    string region = 6;
+    string postcode = 7;
+    string country = 8;
+    uint32 indexInList = 9;
+    double latitude = 10;
+    double longitude = 11;
+}
+
+message ClientCreateRequest {
+	string firstName = 1;
+	string lastName = 2;
+	string clientRoleKey = 3;
+	string assignedBranchKey = 4;
+	string homePhone = 5;
+	string birthDate = 6;
+	string gender = 7;
+	string middleName = 8;
+	string notes = 9;
+	string preferredLanguage = 10;
+	repeated Addresses addresses = 11;
+}
+
+message ClientUpdateRequest {
+	string encodedKey = 1;
+	string id = 2;
+	string state = 3;
+	string firstName = 4;
+	string lastName = 5;
+	string mobilePhone = 6;
+	string emailAddress = 7;
+	string preferredLanguage = 8;
+	string birthDate = 9;
+	string gender = 10;
+	string notes = 11;
+	string assignedBranchKey = 12;
+	string clientRoleKey = 13;
+	uint32 loanCycle = 14;
+	uint32 groupLoanCycle = 15;
+	repeated string groupKeys = 16;
+	repeated Addresses addresses = 17;
+}
+
+message ClientSearchRequest {
+	repeated proto.FilterCriteria filterCriteria = 1;
+	proto.SortingCriteria sortingCriteria = 2;
+}
+
+message ClientListResponse {
+	string responseCode = 1;
+	string responseMessage = 2;
+	repeated Client data = 3;
+    proto.Meta meta = 4;
+}

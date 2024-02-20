@@ -1,0 +1,43 @@
+syntax = "proto3" ;
+
+package proto;
+
+option go_package = "./golang";
+
+message Meta {
+	string trace_id = 1;
+    string Error = 2;
+	repeated Debug_param debug_param = 3;
+}
+
+message Debug_param {
+	uint32 errorCode = 1;
+	string errorSource = 2;
+	string errorReason = 3;
+}
+
+message Error {
+    uint32 errorCode = 1;
+    string errorSource = 2;
+    string errorReason = 3;
+}
+
+message FilterCriteria {
+	string field = 1;
+	string operator = 2;
+	string secondValue = 3;
+	string value = 4;
+	repeated string values = 5;
+}
+
+message SortingCriteria {
+	string field = 1;
+	string order = 2;
+}
+
+message Parameter {
+	uint32 page = 1;
+	uint32 limit = 2;
+	string paginationDetails = 3;
+	string detailsLevel = 4;
+}

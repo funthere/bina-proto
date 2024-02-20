@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package protobuf.los;
+option go_package = "./golang";
+
+message Meta {
+	string trace_id = 1;
+    string Error = 2;
+	repeated Debug_param debug_param = 3;
+}
+
+message Debug_param {
+	uint32 errorCode = 1;
+	string errorSource = 2;
+	string errorReason = 3;
+}
+
+message Error {
+    uint32 errorCode = 1;
+    string errorSource = 2;
+    string errorReason = 3;
+}
